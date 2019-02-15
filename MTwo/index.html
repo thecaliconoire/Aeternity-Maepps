@@ -1,0 +1,422 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <link rel="stylesheet" href="css/leaflet.css"><link rel="stylesheet" href="css/L.Control.Locate.min.css">
+        <link rel="stylesheet" href="css/qgis2web.css"><link rel="stylesheet" href="css/fontawesome-all.min.css">
+        <link rel="stylesheet" href="css/leaflet-control-geocoder.Geocoder.css">
+        <style>
+        html, body, #map {
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            margin: 0;
+        }
+        </style>
+        <title></title>
+    </head>
+    <body>
+        <div id="map">
+        </div>
+        <script src="js/qgis2web_expressions.js"></script>
+        <script src="js/leaflet.js"></script><script src="js/L.Control.Locate.min.js"></script>
+        <script src="js/leaflet-svg-shape-markers.min.js"></script>
+        <script src="js/leaflet.rotatedMarker.js"></script>
+        <script src="js/leaflet.pattern.js"></script>
+        <script src="js/leaflet-hash.js"></script>
+        <script src="js/Autolinker.min.js"></script>
+        <script src="js/rbush.min.js"></script>
+        <script src="js/labelgun.min.js"></script>
+        <script src="js/labels.js"></script>
+        <script src="js/leaflet-control-geocoder.Geocoder.js"></script>
+        <script src="data/Baselayer_0.js"></script>
+        <script src="data/PastEvents_1.js"></script>
+        <script src="data/Events_2.js"></script>
+        <script src="data/mbassadorsmeetups_3.js"></script>
+        <script src="data/mbassadors_4.js"></script>
+        <script src="Leaflet.FileLayer/src/leaflet.filelayer.js"></script>
+        <script src="https://unpkg.com/togeojson@0.14.2"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/4.2.0/normalize.min.css">
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.1.0/dist/leaflet.css">
+        <style>
+      </style>
+        <script>
+  //MAP SETTINGS//
+        var map = L.map('map', {
+            zoomControl:true, maxZoom:4, minZoom:1
+        })
+        var hash = new L.Hash(map);
+        map.attributionControl.addAttribution('<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a>');
+        L.control.locate({locateOptions: {maxZoom: 19}}).addTo(map);
+        var bounds_group = new L.featureGroup([]);
+        function setBounds() {
+            if (bounds_group.getLayers().length) {
+                map.fitBounds(bounds_group.getBounds());
+            }
+        }
+
+
+        //MARKERS AND POPUPS//
+        function pop_Baselayer_0(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td></td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup({maxHeight: 0});
+        }
+
+        function style_Baselayer_0_0() {
+            return {
+                pane: 'pane_Baselayer_0',
+                opacity: 1,
+                color: 'rgba(220,220,220,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(220,220,220,1.0)',
+            }
+        }
+        map.createPane('pane_Baselayer_0');
+        map.getPane('pane_Baselayer_0').style.zIndex = 400;
+        map.getPane('pane_Baselayer_0').style['mix-blend-mode'] = 'normal';
+        var layer_Baselayer_0 = new L.geoJson(json_Baselayer_0, {
+            attribution: '',
+            pane: 'pane_Baselayer_0',
+            onEachFeature: pop_Baselayer_0,
+            style: style_Baselayer_0_0,
+        });
+        bounds_group.addLayer(layer_Baselayer_0);
+        map.addLayer(layer_Baselayer_0);
+        function pop_PastEvents_1(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['id'] !== null ? Autolinker.link(String(feature.properties['id'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Event_Name'] !== null ? Autolinker.link(String(feature.properties['Event_Name'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['City'] !== null ? Autolinker.link(String(feature.properties['City'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Country'] !== null ? Autolinker.link(String(feature.properties['Country'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Date'] !== null ? Autolinker.link(String(feature.properties['Date'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['PictureURL'] !== null ? Autolinker.link(String(feature.properties['PictureURL'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Descript'] !== null ? Autolinker.link(String(feature.properties['Descript'])) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 300});
+        }
+
+        function style_PastEvents_1_0() {
+            return {
+                pane: 'pane_PastEvents_1',
+                shape: 'diamond',
+                radius: 5.0,
+                opacity: 1,
+                color: 'rgba(247,41,110,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(220,220,220,1.0)',
+            }
+        }
+        map.createPane('pane_PastEvents_1');
+        map.getPane('pane_PastEvents_1').style.zIndex = 401;
+        map.getPane('pane_PastEvents_1').style['mix-blend-mode'] = 'normal';
+        var layer_PastEvents_1 = new L.geoJson(json_PastEvents_1, {
+            attribution: '',
+            pane: 'pane_PastEvents_1',
+            onEachFeature: pop_PastEvents_1,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.shapeMarker(latlng, style_PastEvents_1_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_PastEvents_1);
+        map.addLayer(layer_PastEvents_1);
+        function pop_Events_2(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['id'] !== null ? Autolinker.link(String(feature.properties['id'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td style="font-weight: bold" colspan="2">' + (feature.properties['Name'] !== null ? Autolinker.link(String(feature.properties['Name'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['City'] !== null ? Autolinker.link(String(feature.properties['City'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Country'] !== null ? Autolinker.link(String(feature.properties['Country'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Date'] !== null ? Autolinker.link(String(feature.properties['Date'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Descript.'] !== null ? Autolinker.link(String(feature.properties['Descript.'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Photo'] !== null ? Autolinker.link(String(feature.properties['Photo'])) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_Events_2_0() {
+            return {
+                pane: 'pane_Events_2',
+                shape: 'diamond',
+                radius: 5.0,
+                opacity: 1,
+                color: 'rgba(220,220,220,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(247,41,110,1.0)',
+            }
+        }
+        map.createPane('pane_Events_2');
+        map.getPane('pane_Events_2').style.zIndex = 402;
+        map.getPane('pane_Events_2').style['mix-blend-mode'] = 'normal';
+        var layer_Events_2 = new L.geoJson(json_Events_2, {
+            attribution: '',
+            pane: 'pane_Events_2',
+            onEachFeature: pop_Events_2,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.shapeMarker(latlng, style_Events_2_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_Events_2);
+        map.addLayer(layer_Events_2);
+        function pop_mbassadorsmeetups_3(feature, layer) {
+            var popupContent = '<table style= padding:5%; margins: 5%>\
+                    <tr>\
+                        <td style="font:16px Arial; font-weight: bold" colspan="2">' + (feature.properties['Name'] !== null ? Autolinker.link(String(feature.properties['Name'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td style= "padding: 1%; margins: 1%; font-weight: bold" colspan="2">' + (feature.properties['City'] !== null ? Autolinker.link(String(feature.properties['City'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td style= "padding: 1%; margins: 1%; font-weight: bold" colspan="2">' + (feature.properties['State'] !== null ? Autolinker.link(String(feature.properties['State'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td style= "padding: 1%; margins: 1%; font-weight: bold" colspan="2">' + (feature.properties['Country'] !== null ? Autolinker.link(String(feature.properties['Country'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2"><img height="auto" width="250s" src="https:'+feature.properties['Photo URL']+'"></td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Descript'] !== null ? Autolinker.link(String(feature.properties['Descript'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Email'] !== null ? Autolinker.link(String(feature.properties['Email'])) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_mbassadorsmeetups_3_0() {
+            return {
+                pane: 'pane_mbassadorsmeetups_3',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(247,41,110,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(113,16,239,1.0)',
+            }
+        }
+        map.createPane('pane_mbassadorsmeetups_3');
+        map.getPane('pane_mbassadorsmeetups_3').style.zIndex = 403;
+        map.getPane('pane_mbassadorsmeetups_3').style['mix-blend-mode'] = 'normal';
+        var layer_mbassadorsmeetups_3 = new L.geoJson(json_mbassadorsmeetups_3, {
+            attribution: '',
+            pane: 'pane_mbassadorsmeetups_3',
+            onEachFeature: pop_mbassadorsmeetups_3,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.circleMarker(latlng, style_mbassadorsmeetups_3_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_mbassadorsmeetups_3);
+        map.addLayer(layer_mbassadorsmeetups_3);
+        function pop_mbassadors_4(feature, layer) {
+            var popupContent = '<table style= padding:5%; margins: 5%>\
+                    <tr>\
+                        <td style= "font: 16px Arial; font-weight: bold"  colspan="2">' + (feature.properties['Name'] !== null ? Autolinker.link(String(feature.properties['Name'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td style= "padding: 1%; margins: 1%; font-weight: bold" colspan="2">' + (feature.properties['City/Count'] !== null ? Autolinker.link(String(feature.properties['City/Count'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td style= "font:12px Arial;" colspan="2">' + (feature.properties['Short bio'] !== null ? Autolinker.link(String(feature.properties['Short bio'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Info about'] !== null ? Autolinker.link(String(feature.properties['Info about'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Understand'] !== null ? Autolinker.link(String(feature.properties['Understand'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Evolution'] !== null ? Autolinker.link(String(feature.properties['Evolution'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['General fe'] !== null ? Autolinker.link(String(feature.properties['General fe'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Ideas for'] !== null ? Autolinker.link(String(feature.properties['Ideas for'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Social med'] !== null ? Autolinker.link(String(feature.properties['Social med'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Link to in'] !== null ? Autolinker.link(String(feature.properties['Link to in'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['field_13'] !== null ? Autolinker.link(String(feature.properties['field_13'])) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 300});
+        }
+
+        function style_mbassadors_4_0() {
+            return {
+                pane: 'pane_mbassadors_4',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(63,0,125,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(247,41,110,1.0)',
+            }
+        }
+        map.createPane('pane_mbassadors_4');
+        map.getPane('pane_mbassadors_4').style.zIndex = 404;
+        map.getPane('pane_mbassadors_4').style['mix-blend-mode'] = 'normal';
+        var layer_mbassadors_4 = new L.geoJson(json_mbassadors_4, {
+            attribution: '',
+            pane: 'pane_mbassadors_4',
+            onEachFeature: pop_mbassadors_4,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.circleMarker(latlng, style_mbassadors_4_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_mbassadors_4);
+        map.addLayer(layer_mbassadors_4);
+
+  //GEOCODER//
+        var osmGeocoder = new L.Control.Geocoder({
+            collapsed: true,
+            position: 'topleft',
+            text: 'Search',
+            title: 'Testing'
+        }).addTo(map);
+        document.getElementsByClassName('leaflet-control-geocoder-icon')[0]
+        .className += ' fa fa-search';
+        document.getElementsByClassName('leaflet-control-geocoder-icon')[0]
+        .title += 'Search for a place';
+//LEGEND//
+        var baseMaps = {};
+        L.control.layers(baseMaps,{' æmbassadors': layer_mbassadors_4,' æmbassadors meetups': layer_mbassadorsmeetups_3,'Events': layer_Events_2,'Past Events': layer_PastEvents_1,},{collapsed:false}).addTo(map);
+        setBounds();
+
+//WATERMARK//
+        L.Control.Watermark = L.Control.extend({onAdd: function(map) {
+        var img = L.DomUtil.create('img');
+
+        img.src = 'aelogo-small.png';
+        img.style.width = '50%';
+
+        return img;
+    },
+
+    onRemove: function(map) {
+        // Nothing to do here
+    }
+});
+
+L.control.watermark = function(opts) {
+    return new L.Control.Watermark(opts);
+}
+
+L.control.watermark({ position: 'bottomleft' }).addTo(map);
+
+//filelayer
+
+   L.Control.fileLayerLoad({
+       // Allows you to use a customized version of L.geoJson.
+       // For example if you are using the Proj4Leaflet leaflet plugin,
+       // you can pass L.Proj.geoJson and load the files into the
+       // L.Proj.GeoJson instead of the L.geoJson.
+       layer: L.geoJson,
+       // See http://leafletjs.com/reference.html#geojson-options
+       layerOptions: {style: {color:'red'}},
+       // Add to map after loading (default: true) ?
+       addToMap: true,
+       // File size limit in kb (default: 1024) ?
+       fileSizeLimit: 1024,
+       // Restrict accepted file formats (default: .geojson, .json, .kml, and .gpx) ?
+       formats: [
+           '.geojson',
+           '.kml'
+       ]
+   }).addTo(map);
+
+   var control = L.Control.fileLayerLoad();
+    control.loader.on('data:loaded', function (event) {
+        // event.layer gives you access to the layers you just uploaded!
+
+        // Add to map layer switcher
+        layerswitcher.addOverlay(event.layer, event.filename);
+    });
+
+    var control = L.Control.fileLayerLoad();
+control.loader.on('data:error', function (error) {
+    // Do something usefull with the error!
+    console,error(error);
+});
+        </script>
+    </body>
+</html>
