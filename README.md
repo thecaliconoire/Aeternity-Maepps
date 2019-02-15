@@ -1,5 +1,5 @@
 # Aeternity-Maepps
-Maepps
+
 The map runs on project runs on Leaflet.js please read the required documentation located [here](https://leafletjs.com/)
 
 In the Daesh folder please make sure you have the following git repos in your working directory.
